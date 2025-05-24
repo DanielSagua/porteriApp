@@ -43,16 +43,20 @@ router.post('/crear', async (req, res) => {
 });
 
 
-// Obtener todos los registros
 router.get('/listar', async (req, res) => {
     try {
-        const result = await sql.query`SELECT * FROM Novedades`;
+        const result = await sql.query`
+            SELECT N.*, U.username as nombre_usuario
+            FROM Novedades N
+            LEFT JOIN Usuarios U ON N.usuario_id = U.id
+        `;
         res.json(result.recordset);
     } catch (err) {
         console.error('Error al obtener registros:', err);
         res.status(500).send('Error al obtener todos los registros');
     }
 });
+
 
 // Obtener registros por usuario
 router.get('/listar/:usuario_id', async (req, res) => {

@@ -33,6 +33,7 @@
                         <th>Descripción</th>
                         <th>Fecha y Hora</th>
                         <th>Manual</th>
+                        <th>Usuario</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +61,8 @@
           <td>${reg.descripcion}</td>
           <td>${new Date(reg.fecha_hora).toLocaleString()}</td>
           <td>${reg.fecha_manual ? 'Sí' : 'No'}</td>
+            <td>${reg.nombre_usuario || 'Desconocido'}</td> <!-- Aquí se muestra el nombre del usuario -->
+
         `;
                 tbody.appendChild(fila);
             });
