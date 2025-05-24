@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ver Registros</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        // Redirige si no hay sesión activa
+        if (!localStorage.getItem('userId')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-primary mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Libro de Novedades</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4 text-center">Registros de Novedades</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="tablaRegistros">
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Fecha y Hora</th>
+                        <th>Manual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se insertarán los registros -->
+                </tbody>
+            </table>
+            <a href="index.html" class="btn btn-secondary mt-3 w-100">Volver al Menú</a>
+        </div>
+    </div>
+
+    <script>
+        async function cargarRegistros() {
+            const userId = localStorage.getItem('userId');
+            const res = await fetch(`http://localhost:3000/api/novedades/listar/${userId}`);
+            const registros = await res.json();
+
+            const tbody = document.querySelector('#tablaRegistros tbody');
+            tbody.innerHTML = '';
+
+            registros.forEach(reg => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+          <td>${reg.id}</td>
+          <td>${reg.tipo_novedad}</td>
+          <td>${reg.descripcion}</td>
+          <td>${new Date(reg.fecha_hora).toLocaleString()}</td>
+          <td>${reg.fecha_manual ? 'Sí' : 'No'}</td>
+        `;
+                tbody.appendChild(fila);
+            });
+        }
+
+        cargarRegistros();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
