@@ -46,7 +46,7 @@
     <script>
         async function cargarRegistros() {
             const userId = localStorage.getItem('userId');
-            const res = await fetch(`http://localhost:3000/api/novedades/listar/${userId}`);
+            const res = await fetch(`http://localhost:3000/api/novedades/listar`);
             const registros = await res.json();
 
             const tbody = document.querySelector('#tablaRegistros tbody');

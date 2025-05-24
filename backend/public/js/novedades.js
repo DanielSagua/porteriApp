@@ -1,6 +1,7 @@
 const checkbox = document.getElementById('manualFecha');
 const fechaHoraInput = document.getElementById('fechaHora');
 
+
 checkbox.addEventListener('change', () => {
     fechaHoraInput.disabled = !checkbox.checked;
 });
